@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// Use relative /api in dev (proxied to backend); set VITE_API_URL for production
+const API_BASE = import.meta.env.VITE_API_URL || '/api'
 
 function getToken() {
   return localStorage.getItem('token')

@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { authApi } from '../api/client'
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -14,7 +14,7 @@ export default function AdminLogin() {
     setError('')
     setLoading(true)
     try {
-      const data = await authApi.adminLogin(email, password)
+      const data = await authApi.adminLogin(username, password)
       localStorage.setItem('token', data.token)
       localStorage.setItem('role', data.role)
       navigate('/admin/users')
@@ -34,14 +34,14 @@ export default function AdminLogin() {
           {error && <p className="auth-error" role="alert">{error}</p>}
           <form onSubmit={handleSubmit} className="auth-form">
             <div>
-              <label htmlFor="admin-email" className="auth-label">Email</label>
+              <label htmlFor="admin-username" className="auth-label">Username</label>
               <input
-                id="admin-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="admin-username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="auth-input"
-                placeholder="admin@example.com"
+                placeholder="admin"
                 required
               />
             </div>

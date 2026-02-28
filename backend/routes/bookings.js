@@ -44,7 +44,8 @@ router.get('/:id', async (req, res) => {
       .populate('student', 'name email')
       .populate('hostel', 'name location')
     if (!booking) return res.status(404).json({ error: 'Booking not found' })
-    if (req.user.role === 'student' && !booking.student._id.equals(req.user._id)) {
+    const studentId = booking.student?._id || booking.student
+    if (req.user.role === 'student' && studentId && !studentId.equals(req.user._id)) {
       return res.status(403).json({ error: 'Forbidden' })
     }
     res.json(booking)
@@ -58,7 +59,8 @@ router.patch('/:id', async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
     if (!booking) return res.status(404).json({ error: 'Booking not found' })
-    if (req.user.role === 'student' && !booking.student.equals(req.user._id)) {
+    const studentId = booking.student?._id || booking.student
+    if (req.user.role === 'student' && studentId && !studentId.equals(req.user._id)) {
       return res.status(403).json({ error: 'Forbidden' })
     }
     Object.assign(booking, req.body)
@@ -77,7 +79,8 @@ router.delete('/:id', async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
     if (!booking) return res.status(404).json({ error: 'Booking not found' })
-    if (req.user.role === 'student' && !booking.student.equals(req.user._id)) {
+    const studentId = booking.student?._id || booking.student
+    if (req.user.role === 'student' && studentId && !studentId.equals(req.user._id)) {
       return res.status(403).json({ error: 'Forbidden' })
     }
     await Booking.findByIdAndDelete(req.params.id)

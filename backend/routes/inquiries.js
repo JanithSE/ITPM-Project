@@ -37,7 +37,8 @@ router.get('/:id', async (req, res) => {
   try {
     const inquiry = await Inquiry.findById(req.params.id).populate('from', 'name email')
     if (!inquiry) return res.status(404).json({ error: 'Inquiry not found' })
-    if (req.user.role === 'student' && !inquiry.from._id.equals(req.user._id)) {
+    const fromId = inquiry.from?._id || inquiry.from
+    if (req.user.role === 'student' && fromId && !fromId.equals(req.user._id)) {
       return res.status(403).json({ error: 'Forbidden' })
     }
     res.json(inquiry)

@@ -3,8 +3,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import StudentLayout from './layouts/StudentLayout'
 import AdminLayout from './layouts/AdminLayout'
 import Home from './pages/Home'
-import StudentLogin from './pages/StudentLogin'
-import StudentSignup from './pages/StudentSignup'
+import StudentAuth from './pages/StudentAuth'
 import AdminLogin from './pages/AdminLogin'
 import StudentDashboard from './pages/student/StudentDashboard'
 import Hostels from './pages/student/Hostels'
@@ -26,8 +25,8 @@ export default function App() {
     <Routes>
       {/* Public */}
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<StudentLogin />} />
-      <Route path="/signup" element={<StudentSignup />} />
+      <Route path="/login" element={<StudentAuth />} />
+      <Route path="/signup" element={<StudentAuth />} />
       <Route path="/admin/login" element={<AdminLogin />} />
 
       {/* Student (protected) */}

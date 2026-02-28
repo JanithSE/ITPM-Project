@@ -36,7 +36,8 @@ router.get('/:id', async (req, res) => {
   try {
     const payment = await Payment.findById(req.params.id).populate('student', 'name email')
     if (!payment) return res.status(404).json({ error: 'Payment not found' })
-    if (req.user.role === 'student' && !payment.student._id.equals(req.user._id)) {
+    const studentId = payment.student?._id || payment.student
+    if (req.user.role === 'student' && studentId && !studentId.equals(req.user._id)) {
       return res.status(403).json({ error: 'Forbidden' })
     }
     res.json(payment)
